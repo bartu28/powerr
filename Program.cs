@@ -40,8 +40,7 @@ namespace powerr
                 catch (Exception)
                 {
                     // The user did not allow the application to run as administrator
-                    MessageBox.Show("Sorry, but I don't seem to be able to start " +
-                       "this program with administrator rights!");
+                    MessageBox.Show("Sorry, but this program needs administrator rights to function properly.");
                 }
 
                 // Shut down the current process
