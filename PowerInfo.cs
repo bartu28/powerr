@@ -1,6 +1,7 @@
 ﻿using LibreHardwareMonitor.Hardware;
 using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace power
 {
@@ -28,21 +29,26 @@ namespace power
             string output = "";
             foreach (IHardware hardware in computer.Hardware)
             {
-                output = output + "Hardware: " + hardware.Name + "\n";
-                float? maxPower = 0;
-                SensorType maxSensorType = SensorType.Power;
-                foreach (ISensor sensor in hardware.Sensors)
+
+                if (!hardware.Name.Contains(" UHD "))
                 {
-                    if (sensor.SensorType == SensorType.Power && maxPower < sensor.Value)
+                    output = output + "Hardware: " + hardware.Name + "\n";
+                    float? maxPower = 0;
+                    SensorType maxSensorType = SensorType.Power;
+                    foreach (ISensor sensor in hardware.Sensors)
                     {
-                        maxPower = sensor.Value;
-                        maxSensorType = sensor.SensorType;
+                        if (sensor.SensorType == SensorType.Power && maxPower < sensor.Value && sensor.Value < 1000)
+                        {
+                            maxPower = sensor.Value;
+                            maxSensorType = sensor.SensorType;
+                        }
                     }
+                    output = output + "\t\tSensor: " + maxSensorType.ToString() + ", value: " + String.Format("{0:0.00}", maxPower) + " W" + "\n";
+                    sumOfWatts += maxPower;
                 }
-                output = output + "\t\tSensor: " + maxSensorType.ToString() + ", value: " + maxPower.ToString() + " W." + "\n";
-                sumOfWatts += maxPower;
             }
-            output = output + "\nTotal power consumption: , value: " + sumOfWatts + " W.";
+            output = output + "\nTotal value: " + String.Format("{0:0.00}", sumOfWatts) + " W";
+            output = output + "\n\nTotal power consumption should be a bit more due to power supply efficiency and other components.";
             return output;
         }
     }

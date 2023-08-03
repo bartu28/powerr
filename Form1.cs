@@ -97,5 +97,21 @@ namespace powerr
             WindowState = FormWindowState.Normal;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                float HourVal = float.Parse(textBox1.Text);
+                float AverageVal = float.Parse(textBox2.Text);
+                float kw_h_val = float.Parse(textBox3.Text);
+                float totalvalue = HourVal * AverageVal * kw_h_val / 1000;
+                label3.Text = "Total cost is: " + String.Format("{0:0.00}", totalvalue);
+            }
+            catch (FormatException fe)
+            {
+                label3.Text = "Error:" + fe.Message;
+            }
+            
+        }
     }
 }
