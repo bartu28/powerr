@@ -1,1 +1,1 @@
-# powerr
+This program uses LibreHardwareMonitorLib and displays CPU and GPU power consumptions in a windows form application while allowing calculation for price calculation user should take into account of the display and other components, this application might be usefull if you are curious about how much your CPU or GPU is consuming.
